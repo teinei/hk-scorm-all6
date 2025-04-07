@@ -1,0 +1,804 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<html> 
+<head> 
+<!-- 
+Copyright (c)    : DLIFLC 2006 
+--> 
+<title>Online Language Survival Kit</title> 
+
+ 
+<meta http-equiv="Content-Type"  content="text/html; charset=utf-8"> 
+<meta http-equiv="Content-Language"  content="en"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="pragma"    content="no-cache"> 
+<meta http-equiv="Expires"   content="0"> 
+<meta name="Author"      content="DLIFLC"> 
+<meta name="Robots"      content="noindex"> 
+
+ 
+<script type="text/javascript" src="bypass.js"></script> 
+<script type="text/javascript" src="print.js"></script> 
+<link href="lsk_standard.css" rel="stylesheet" type="text/css"> 
+<script language="Javascript" type="text/Javascript"> 
+//==================== Start Standard Javascript Include ====================== 
+
+ 
+function MM_swapImgRestore() { //v3.0 
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc; 
+}MM_swapImgRestore 
+
+ 
+function MM_preloadImages() { //v3.0 
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array(); 
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++) 
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}} 
+}MM_preloadImages 
+
+ 
+function MM_findObj(n, d) { //v4.01 
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) { 
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);} 
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n]; 
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document); 
+  if(!x && d.getElementById) x=d.getElementById(n); return x; 
+}//MM_findObj 
+
+ 
+function MM_swapImage() { //v3.0 
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3) 
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];} 
+}//MM_swapImage 
+
+ 
+function getPage() 
+  { 
+  document.navForm.cmd.value = getPage.arguments[0] 
+  document.navForm.lang.value = getPage.arguments[1] 
+  document.navForm.langDir.value = getPage.arguments[2] 
+    document.navForm.id.value = getPage.arguments[3] 
+  document.navForm.submit() 
+  } 
+
+ 
+function loadAud(lang, fileName) 
+  { 
+  fileName = "media/" + lang + "/" + fileName + ".mp3" 
+  window.document.audPlayer.SetVariable("audFile", fileName); 
+  } 
+
+ 
+function w_open( url, ww, hh ) 
+  { 
+  var p = "toolbar=0, scrollbars=1, menubar=0, resizable=1, status=0, location=0, directories=0, width=" + ww + ", height=" + hh 
+  window.open(url,"_blank",p) 
+  }//w_open 
+
+ 
+//===================== End Standard Javascript Include ======================= 
+//======================== Start LSK Javascript =============================== 
+function xid( a ) 
+{ 
+return document.getElementById( a ) 
+}//xid 
+
+ 
+function get_HTML_comment(s) 
+  { 
+  return s.substring( s.indexOf('<!--')+6, s.indexOf('-->') ) 
+  }//get_HTML_comment 
+
+ 
+function set_global_var( name, val ) 
+  {  
+  eval( "window[name] = val" )  
+  }   
+
+ 
+function w_class() 
+  { 
+  var wr = "" 
+  function ws() 
+    {  
+    for (var i=0, n=arguments.length; i<n; i++) 
+      wr += arguments[i] 
+    } 
+  function wl() 
+    {  
+    ws.apply( null, arguments ) 
+    ws( String.fromCharCode(32, 13, 10) ) 
+    } 
+  function init() 
+    {  
+    wl( "var wr = ''"     ) 
+    wl( ws.toString()     ) 
+    wl( wl.toString()     ) 
+    } 
+  this.get_source = function() 
+    { 
+    return wr 
+    } 
+  init() 
+  }//w_class 
+
+ 
+var gv_pg = 0 
+var cTbl = "" 
+function nxt_pg() 
+{ 
+if(gv_pg < cTbl.length-1) 
+  { 
+  cTbl[gv_pg].style.display = "none" 
+  gv_pg++ 
+  cTbl[gv_pg].style.display = "inline" 
+  xid( "id_prev_pg" ).style.visibility = "visible" 
+  xid( "id_prev_pgBtm" ).style.visibility = "visible" 
+  document.pageForm.page.value = parseInt(document.pageForm.page.value)+1 
+  eval('document.id_page.src="graphics/pg'+document.pageForm.page.value+'.gif"') 
+  eval('document.id_pageBtm.src="graphics/pg'+document.pageForm.page.value+'.gif"') 
+  if( gv_pg == cTbl.length-1 ) 
+    { 
+    xid( "id_next_pg" ).style.visibility = "hidden" 
+    xid( "id_next_pgBtm" ).style.visibility = "hidden" 
+    } 
+  } 
+} 
+function prv_pg() 
+{ 
+if(gv_pg > 0) 
+  { 
+  cTbl[gv_pg].style.display = "none" 
+  gv_pg-- 
+  cTbl[gv_pg].style.display = "inline" 
+  xid( "id_next_pg" ).style.visibility = "visible" 
+  xid( "id_next_pgBtm" ).style.visibility = "visible" 
+  document.pageForm.page.value = parseInt(document.pageForm.page.value)-1 
+  eval('document.id_page.src="graphics/pg'+document.pageForm.page.value+'.gif"') 
+  eval('document.id_pageBtm.src="graphics/pg'+document.pageForm.page.value+'.gif"') 
+  if( gv_pg == 0) 
+    { 
+    xid( "id_prev_pg" ).style.visibility = "hidden" 
+    xid( "id_prev_pgBtm" ).style.visibility = "hidden" 
+    } 
+  } 
+} 
+
+ 
+window.onload = function() 
+{ 
+set_global_var( "gi_w_lib", new w_class() ) 
+cTbl = xid('id_anc').getElementsByTagName( 'TABLE' ) 
+cTbl[0].style.display = "inline" 
+xid( "id_prev_pg" ).style.visibility = "hidden" 
+xid( "id_prev_pgBtm" ).style.visibility = "hidden" 
+xid( "id_next_pg" ).style.visibility = "hidden" 
+xid( "id_next_pgBtm" ).style.visibility = "hidden" 
+//checking for winXP  
+  if(navigator.userAgent.indexOf( "5.1" ) != -1 && navigator.platform.indexOf( "Win" ) != -1 )  
+    { 
+    document.styleSheets[0].rules[4].style.fontFamily = "Microsoft Sans Serif"   
+    } 
+if( cTbl.length>1 ) 
+  { 
+  xid( "id_next_pg" ).style.visibility = "visible" 
+  xid( "id_next_pgBtm" ).style.visibility = "visible" 
+  } 
+eval('document.id_pages.src="graphics/pg'+cTbl.length+'.gif"') 
+eval('document.id_pagesBtm.src="graphics/pg'+cTbl.length+'.gif"') 
+} 
+//========================= End LSK Javascript ================================ 
+ 
+</script> 
+ 
+</head> 
+<body> 
+<div align="center"> 
+<!-- Begin top graphic//--> 
+<form action="default.asp" method="post" name="navForm"> 
+<table width="700" border="0" cellspacing="0" cellpadding="0"> 
+  <tr> 
+    <td width="405" height="24"> 
+      <img src="graphics/catopCap.jpg" width="405" height="24" alt=""></td> 
+    <td width="225" height="24" align="right"> 
+      <a href="javascript:w_open('instructions.html',415,510)" title="Get Instructions"><img src="graphics/instruction.jpg" width="225" height="24" alt="Get Instructions" border="0"></a></td> 
+    <td width="70" height="24"> 
+      <img src="graphics/caCap.jpg" width="70" height="24" alt=""></td> 
+  </tr> 
+  <tr> 
+    <td colspan="3" height="86"> 
+      <img src="graphics/caMain.jpg" width="700" height="86" alt="main picture"></td> 
+  </tr> 
+</table> 
+<table width="700" border="0" cellspacing="0" cellpadding="0"> 
+  <tr> 
+    <td colspan="5" align="right"> 
+    <img src="graphics/caTitle.jpg" width="700" height="20" alt="Title Bar"></td> 
+  </tr> 
+  <tr> 
+    <td rowspan="2" width="2" height="20" bgcolor="#646464" valign="top"> 
+   <img src="graphics/edgeTL.gif" width="2" height="20" alt=""></td> 
+ <td rowspan="2" width="4" height="20" bgcolor="#868686" valign="top"> 
+   <img src="graphics/edgeTL2.gif" width="4" height="20" alt=""></td> 
+ <td width="688" height="2"  bgcolor="#868686" valign="top"> 
+   <img src="graphics/edgeT.gif" width="688" height="2" alt=""></td> 
+ <td rowspan="2" width="4" height="20" bgcolor="#868686" valign="top"> 
+   <img src="graphics/edgeTR2.gif" width="4" height="20" alt=""></td> 
+ <td rowspan="2" width="2" height="20" bgcolor="#646464" valign="top"> 
+   <img src="graphics/edgeTR.gif" width="2" height="20" alt=""></td> 
+  </tr> 
+  <tr> 
+    <td width="688" height="18" bgcolor="#868686"> 
+      <div> 
+  <table width="688" border="0" cellspacing="0" cellpadding="0"> 
+    <tr> 
+      <td width="48" valign="top"> 
+        <a href="default.html" title="Go To Main Menu"><img src="graphics/menu.gif" width="48" height="18" border="0" alt="Go To Main Menu"></a></td> 
+      <td width="48" valign="top"> 
+        <a href="javascript:printPg('Cantonese','ltr')" title="Print Page"><img src="graphics/print.gif" width="48" height="18" alt="Print Page" border="0"></a></td> 
+      <td width="49" valign="top"></td> 
+      <td width="466"> 
+        <img src="graphics/caHeader_5.gif" width="425" height="18" alt=""></td> 
+      <td width="15"> 
+        <a href="javascript:prv_pg()" title="Previous Page"><img id="id_prev_pg" src="graphics/back.gif" width="15" height="18" alt="previous page" border="0"></a></td> 
+      <td width="96" align="center"><img name="id_page" src="graphics/pg1.gif" width="20" height="18" alt="Page"><img src="graphics/of.gif" width="20" height="18" alt=""><img name="id_pages" src="graphics/1px.gif" width="20" height="18" alt="Page Total"></td> 
+      <td width="15"> 
+        <a href="javascript:nxt_pg()" title="Next Page"><img id="id_next_pg" src="graphics/next.gif" width="15" height="18" alt="next page" border="0"></a></td> 
+    </tr> 
+  </table> 
+      </div> 
+    </td> 
+  </tr> 
+  <tr> 
+    <td colspan="5" height="4"> 
+   <img src="graphics/edgeBT.gif" width="700" height="4" alt=""></td> 
+  </tr> 
+  <tr> 
+  <td width="2" bgcolor="#646464"> 
+      <img src="graphics/1px.gif" width="2" alt=""></td> 
+  <td colspan="3" bgcolor="#EDEDE6" align="left" valign="top"> 
+      <img src="graphics/1px.gif" height="2" width="688" alt=""></td> 
+  <td width="2" bgcolor="#646464"> 
+      <img src="graphics/1px.gif" width="2" alt=""></td> 
+  </tr> 
+  <tr> 
+  <td width="2" bgcolor="#646464"> 
+ <img src="graphics/1px.gif" width="2" alt=""></td> 
+   <td colspan="3" bgcolor="#EDEDE6" align="left" valign="top"> 
+ 
+<!-- Begin Content //--> 
+  <table width="692" border="0" cellspacing="0" cellpadding="0"> 
+  <tr> 
+    <td colspan="4" height="24" align="center"> 
+      <table width="692" cellspacing="0" cellpadding="0" border="0"> 
+        <tr> 
+    <td class="css_hdr" width="29" height="24"> 
+      <img src="graphics/1px.gif" width="29" height="24" alt=""></td> 
+    <td class="css_hdr" width="2" height="24"> 
+      <img src="graphics/1px.gif" alt="" width="2" height="24"></td> 
+    <td class="css_hdr" width="219"> 
+      <img src="graphics/titleEnglish.gif" width="219" height="20" alt=""></td> 
+    <td class="css_hdr" width="2" height="24"> 
+      <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+    <td class="css_hdr" width="219"> 
+      <img src="graphics/titleRoman.gif" width="219" height="20" alt=""></td> 
+    <td class="css_hdr" width="2" height="24"> 
+      <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+    <td class="css_hdr" width="219"> 
+      <img src="graphics/titleTarget.gif" width="219" height="20" alt=""></td> 
+        </tr> 
+        <tr> 
+    <td colspan="7"> 
+      <img src="graphics/breakLine.gif" width="692" height="2" alt=""></td> 
+        </tr> 
+      </table> 
+    </td> 
+  </tr> 
+  <tr> 
+    <td colspan="4" width="692" height="240" valign="top" id="id_anc"> 
+            <table width="692" border="0" style="display:none" cellspacing="0" cellpadding="0"> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_01')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Do not stop if the convoy is attacked!  </td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_01')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yu gwor chey dui bay gung gik, m ho ting chey!</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#22914;&#26524;&#36710;&#38431;&#34987;&#25915;&#20987;&#65292;&#21566;&#22909;&#20572;&#36710;&#65281;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_02')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Drive a minimum of 3 kms before stopping.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_02')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">heng sait jee siu sam gung lay sin ho teng chey</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#34892;&#39542;&#33267;&#23569;&#19977;&#20844;&#37324;&#20808;&#22909;&#20572;&#36710;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_03')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Following distance is 100m on open highway.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_03')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">haai go chuk gung lo seung, chey kui haai yat bak mait</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21946;&#39640;&#36895;&#20844;&#36335;&#19978;&#65292;&#36710;&#36317;&#21946;&#19968;&#30334;&#31859;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_04')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Following distance is 50m in towns.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_04')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">haai see chun lui meen, chey kui haai m sup mait</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21946;&#24066;&#38215;&#37324;&#38754;&#65292;&#36710;&#36317;&#21946;&#20116;&#21313;&#31859;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_05')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">When stopped on the road, keep enough space between vehicles to drive around if required.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_05')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">haai tiu lo doh teng chey see, chey leung jee gan bo chee juk gau dil tau ge hung gan</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21946;&#26465;&#36335;&#24230;&#20572;&#36710;&#26102;&#65292;&#36710;&#36742;&#20043;&#38388;&#20445;&#25345;&#36275;&#22815;&#35843;&#22836;&#22021;&#31354;&#38388; </td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+             </table> 
+            <table width="692" border="0" style="display:none" cellspacing="0" cellpadding="0"> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_06')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">If you lose sight of the convoy, slow down and wait for a military truck to pass you, and follow it.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_06')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yu gwor lay gun m seung chey dui see, mahn saai dung gwan chey ging gwor, yin hau gun chu heng</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#22914;&#26524;&#20320;&#36319;&#21780;&#19978;&#36710;&#38431;&#26102;&#65292;&#24930;&#39542;&#31561;&#20891;&#36710;&#32463;&#36807;&#65292;&#28982;&#21518;&#36319;&#20303;&#34892;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_07')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No weapons.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_07')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yim gum mo hay</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#20005;&#31105;&#27494;&#22120;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_08')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No cell phone use.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_08')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">but duk saai yung saow gay</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#19981;&#24471;&#20351;&#29992;&#25163;&#26426;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_09')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Do not throw food or water to the locals.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_09')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">m ho pau sik mut wak tse sui bay boon day yan</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21566;&#22909;&#25243;&#39135;&#29289;&#25110;&#32773;&#27700;&#27604;&#26412;&#22320;&#20154;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_10')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No littering or dumping trash on military camps or staging areas.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_10')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">but hor luen pau wak hay jee lap saab haai gwan ying wak tse paai fat jarm</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#19981;&#21487;&#20081;&#20002;&#25110;&#24323;&#32622;&#22403;&#22334;&#21946;&#20891;&#33829;&#25110;&#32773;&#27966;&#21457;&#31449;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+             </table> 
+            <table width="692" border="0" style="display:none" cellspacing="0" cellpadding="0"> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_11')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Go around any broken down truck in the convoy.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_11')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yu gwor yum ho chey dui ge waai chey</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#32469;&#36807;&#20219;&#20309;&#36710;&#38431;&#22021;&#22351;&#36710;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_12')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No flashing beacons.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_12')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">m ho dar sim dung</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21566;&#22909;&#25171;&#38378;&#28783;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_13')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Fuel vehicle every time vehicle stops.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_13')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">mui chee chey leung teng chey see doh yiu gar yau</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#27599;&#27425;&#36710;&#36742;&#20572;&#36710;&#26102;&#37117;&#35201;&#21152;&#27833;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_14')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Food is provided at some military camps when available.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_14')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yu gwor yau ge wah, yat dee gwan ying wui yau sik mut taai gung ge</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#22914;&#26524;&#26377;&#22021;&#35805;&#65292;&#19968;&#21874;&#20891;&#33829;&#20250;&#26377;&#39135;&#29289;&#25552;&#20379;&#22021;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_15')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Bring plenty of food and water with you.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_15')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">daai dor dee sik mut tung maai sik sui</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#24102;&#22810;&#21874;&#39135;&#29289;&#21516;&#22475;&#39135;&#27700;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+             </table> 
+            <table width="692" border="0" style="display:none" cellspacing="0" cellpadding="0"> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_16')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">If you have to stop for any reason and the convoy continues, wait for help from the military. </td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_16')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">yu gwor lay yau yum ho yuen yan yiu teng chey yee chey dui yiu gey chuk chin chun ge wah, dung chey dui ley bong lay saow</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#22914;&#26524;&#20320;&#26377;&#20219;&#20309;&#21407;&#22240;&#35201;&#20572;&#36710;&#32780;&#36710;&#38431;&#35201;&#32487;&#32493;&#21069;&#36827;&#22021;&#35805;&#65292;&#31561;&#20891;&#38431;&#40654;&#24110;&#20320;&#25163; </td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_17')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">They will escort you back into position.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_17')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">kui day wui bong lay fan fan hui boon loi ge waai jee</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#20322;&#21707;&#20250;&#24110;&#20320;&#30058;&#30058;&#21435;&#26412;&#26469;&#22021;&#20301;&#32622;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_18')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No fighting or arguing with any other driver over position in convoy.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_18')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">m ho tung kay tar see gay waai jor tsang chey dui doh ge paai waai yee tar gau wak aai gau</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21566;&#22909;&#21516;&#20854;&#20182;&#21496;&#26426;&#20026;&#21655;&#20105;&#36710;&#38431;&#24230;&#22021;&#25490;&#20301;&#32780;&#25171;&#20132; &#25110;&#21964;&#20132;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_19')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Drive in a single file.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_19')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">dan heng heng chey</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21333;&#34892;&#34892;&#36710;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_20')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Be prepared to stop and assist broken down trucks. (Note: This is an instruction for bobtail drivers.)</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_20')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">art may chey leung: tsui see chun bay teng chey hip chor waai chey</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21387;&#23614;&#36710;&#36742;&#65306;&#38543;&#26102;&#20934;&#22791;&#20572;&#36710;&#21332;&#21161;&#22351;&#36710;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+             </table> 
+            <table width="692" border="0" style="display:none" cellspacing="0" cellpadding="0"> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_21')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Report any problems with other drivers to the convoy commander.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_21')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">heung chey dui see ling po go yau gwan kay tar see gay ge yum ho mun taai</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21521;&#36710;&#38431;&#21496;&#20196;&#25253;&#21578;&#26377;&#20851;&#20854;&#23427;&#21496;&#26426;&#22021;&#20219;&#20309;&#38382;&#39064;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_22')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">No drug or alcohol use while driving.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_22')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">gar saai see, but ho kup duk wak yum jau</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#39550;&#39542;&#26102;&#65292;&#19981;&#21487;&#21560;&#27602;&#25110;&#39278;&#37202;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_23')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Know how to change tires and have proper tools.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_23')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">ying sik deem yeung woon taai tung maai pui bay hup sik ge gung gui</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#35748;&#35782;&#28857;&#26679;&#25442;&#21588;&#21516;&#22475;&#37197;&#22791;&#21512;&#36866;&#22021;&#24037;&#20855;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_24')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Loads, straps, chains, and tires are the drivers' responsibility.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_24')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">see gay yiu foo jark jong for, bong daai sing, seung lin, tung gim char chey taai</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#21496;&#26426;&#35201;&#36000;&#36131;&#35013;&#36135;&#12289;&#32538;&#24102;&#12289;&#19978;&#32451;&#12289;&#21516;&#26816;&#26597;&#36710;&#21588;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+              <tr> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('english', 'en_ca_05_25')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+          <td width="210" dir="ltr" class="css_cnt">Check every time the convoy stops.</td> 
+         <td class="css_hdr" width="2" height="50"> 
+           <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="29" height="50" align="center"> 
+           <img class="btn" src="graphics/play.gif" onclick="loadAud('Cantonese', 'cc_ca_05_25')" width="16" height="16" alt="Play Button" border="0" onmouseover="this.src='graphics/play_over.gif'" onmouseout="this.src='graphics/play.gif'"></td> 
+         <td width="210"class="css_cnt">mui chee chey dui teng chey see doh yiu gim char</td> 
+          <td class="css_hdr" width="2" height="50"> 
+            <img src="graphics/spacer.gif" alt="" width="2" height="24"></td> 
+         <td width="210" dir="ltr"  class="css_cnt2" >&#27599;&#27425;&#36710;&#38431;&#20572;&#36710;&#26102;&#37117;&#35201;&#26816;&#26597;</td> 
+       </tr> 
+        <tr> 
+         <td colspan="7" height="2"> 
+           <img src="graphics/breakLine.gif" alt="" width="692" height="2"></td> 
+       </tr> 
+             </table> 
+</td> 
+  </tr> 
+</table> 
+ 
+<!-- End content//--> 
+    </td> 
+    <td width="2" bgcolor="#646464"> 
+      <img src="graphics/1px.gif" width="2" alt=""></td> 
+  </tr> 
+    <tr> 
+ <td colspan="5" width="692" height="2"> 
+   <img src="graphics/edgeBB.gif" width="700" height="4" alt=""></td> 
+  </tr> 
+  <tr> 
+    <td rowspan="2" width="2" height="20" valign="bottom" bgcolor="#4A4A4A"> 
+   <img src="graphics/edgeBL.gif" width="2" height="20" alt=""></td> 
+ <td rowspan="2" width="4" height="20" valign="bottom"  bgcolor="#868686"> 
+   <img src="graphics/edgeBL2.gif" width="4" height="20" alt=""></td> 
+    <td width="688" height="18" bgcolor="#868686"> 
+      <div> 
+  <table width="688" border="0" cellspacing="0" cellpadding="0"> 
+    <tr> 
+      <td width="49"  valign="bottom"> 
+      <a href="default.html" title="Go To Main Menu"><img src="graphics/menuB.gif" width="48" height="18" border="0" alt="Go To Main Menu"></a></td> 
+      <td width="48" valign="bottom"> 
+        <a href="javascript:printPg('Cantonese','ltr')" title="Print Page"><img src="graphics/print.gif" width="48" height="18" alt="Print Page" border="0"></a></td> 
+      <td width="467" align="center"> 
+        <img src="graphics/copyright.gif" width="425" height="18" alt="copyright DLIFLC 2006"></td> 
+      <td width="15"> 
+      <a href="javascript:prv_pg()" title="Previous Page"><img id="id_prev_pgBtm" src="graphics/back.gif" width="15" height="18" alt="previous page" border="0"></a></td> 
+    <td width="96" align="center"><img name="id_pageBtm" src="graphics/pg1.gif" width="20" height="18" alt="Page"><img src="graphics/of.gif" width="20" height="18" alt=""><img name="id_pagesBtm" src="graphics/1px.gif" width="20" height="18" alt="Page Total"></td> 
+      <td width="15"> 
+      <a href="javascript:nxt_pg()" title="Next Page"><img id="id_next_pgBtm" src="graphics/next.gif" width="15" height="18" alt="next page" border="0"></a></td> 
+    </tr> 
+  </table> 
+      </div> 
+    </td> 
+    <td rowspan="2" width="4" height="20" valign="bottom" bgcolor="#868686"> 
+   <img src="graphics/edgeBR2.gif" width="4" height="20" alt=""></td> 
+ <td rowspan="2" width="2" height="20" valign="bottom" bgcolor="#4A4A4A"> 
+      <img src="graphics/edgeBR.gif" width="2" height="20" alt=""></td> 
+  </tr> 
+  <tr> 
+    <td width="688" height="2"> 
+      <img src="graphics/edgeB.gif" width="688" height="2" alt=""></td> 
+  </tr> 
+</table> 
+<table width="688" cellspacing="0" cellpadding="0" border="0"> 
+  <tr> 
+    <td align="right">                 <div id='audDiv' align="left">zoom map </div>
+
+                 <script type="text/javascript">
+   var so = new SWFObject("audioPlayer.swf", "audPlayer", "320", "24", "1");
+   so.write("audDiv");
+                 </script>  
+    </td> 
+  </tr> 
+</table> 
+<input type="hidden" name="cmd" value=""> 
+<input type="hidden" name="lang" value=""> 
+<input type="hidden" name="langDir" value=""> 
+<input type="hidden" name="id" value=""> 
+<input type="hidden" name="playerType" value="0"> 
+</form> 
+<form name="pageForm" action=""> 
+<input type="hidden" name="page" value="1"> 
+</form> 
+<div id="id_control" ></div> 
+<!-- End content frame//--> 
+ 
+</div> 
+</body> 
+</html> 
